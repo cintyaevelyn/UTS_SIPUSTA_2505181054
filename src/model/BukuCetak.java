@@ -10,9 +10,9 @@ package model;
  */
 public class BukuCetak extends Koleksi implements Terarsip {
 
-    private int jumlahHalaman;
-    private String nomorRak;
-    private boolean sedangDiperbaiki;
+    private final int jumlahHalaman;
+    private final String nomorRak;
+    private final boolean sedangDiperbaiki;
 
     public BukuCetak(String kodeKoleksi, String judul, int tahunTerbit,
                      int jumlahHalaman, String nomorRak, boolean sedangDiperbaiki) {
@@ -22,16 +22,20 @@ public class BukuCetak extends Koleksi implements Terarsip {
         this.sedangDiperbaiki = sedangDiperbaiki;
     }
 
-    // [Atribusi AI]: Method layakDipinjam() dibantu AI untuk menerapkan aturan
-    // bahwa buku cetak layak dipinjam bila tidak sedang diperbaiki.
+    // [Atribusi AI]: Aturan kelayakan buku cetak dibantu AI.
     @Override
     public boolean layakDipinjam() {
         return !sedangDiperbaiki;
     }
 
     @Override
+    public String jenis() {
+        return "Buku Cetak";
+    }
+
+    @Override
     public String deskripsi() {
-        return super.deskripsi() + " | " + jumlahHalaman + " halaman, rak " + nomorRak;
+        return super.deskripsi() + ", " + jumlahHalaman + " halaman, rak " + nomorRak;
     }
 
     @Override
@@ -40,9 +44,19 @@ public class BukuCetak extends Koleksi implements Terarsip {
     }
 
     // [Atribusi AI]: Aturan lantai dibantu AI: huruf pertama nomor rak
-    // menentukan lantai (A = lantai 1, B = lantai 2, dan seterusnya).
+    // menentukan lantai (A = 1, B = 2, C = 3).
     @Override
     public int lokasiLantai() {
-        return nomorRak.charAt(0) - 'A' + 1;
+        char huruf = Character.toUpperCase(nomorRak.charAt(0));
+        if (huruf == 'A') {
+            return 1;
+        }
+        if (huruf == 'B') {
+            return 2;
+        }
+        if (huruf == 'C') {
+            return 3;
+        }
+        return 0;
     }
 }

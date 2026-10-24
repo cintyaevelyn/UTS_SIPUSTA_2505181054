@@ -10,7 +10,7 @@ package model;
  */
 
 // [Atribusi AI]: Interface Terarsip beserta default method ringkasanArsip()
-// dibantu AI untuk menggabungkan nomor rak dan lantai.
+// dibuat dengan bantuan AI.
 public interface Terarsip {
 
     String nomorRak();
@@ -18,6 +18,6 @@ public interface Terarsip {
     int lokasiLantai();
 
     default String ringkasanArsip() {
-        return "Rak " + nomorRak() + ", lantai " + lokasiLantai();
+        return "Disimpan di rak " + nomorRak() + ", lantai " + lokasiLantai();
     }
 }

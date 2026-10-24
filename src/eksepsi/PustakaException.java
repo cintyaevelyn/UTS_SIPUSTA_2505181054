@@ -9,9 +9,10 @@ package eksepsi;
  * @author dewi daughter
  */
 
-// [Atribusi AI]: Hierarki eksepsi (induk dan dua turunan) beserta pesan yang
-// ramah pengguna dibantu AI.
+// [Atribusi AI]: Hierarki eksepsi (induk dan dua turunan) dibuat dengan bantuan AI.
 public class PustakaException extends Exception {
+
+    private static final long serialVersionUID = 1L;
 
     public PustakaException(String pesan) {
         super(pesan);

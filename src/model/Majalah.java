@@ -10,13 +10,13 @@ package model;
  */
 public class Majalah extends Koleksi implements Terarsip {
 
-    private int edisi;
-    private String bulanTerbit;
-    private boolean edisiTerbaru;
-    private String nomorRak;
+    private final int edisi;
+    private final String bulanTerbit;
+    private final boolean edisiTerbaru;
+    private final String nomorRak;
 
-    // [Atribusi AI]: Atribut nomorRak pada Majalah ditambahkan dengan bantuan
-    // AI karena interface Terarsip memerlukannya (nilainya asumsi).
+    // [Atribusi AI]: Atribut nomorRak pada Majalah ditambahkan karena interface
+    // Terarsip memerlukannya. Nilai rak (C-01, C-02) adalah asumsi, tidak ada di naskah.
     public Majalah(String kodeKoleksi, String judul, int tahunTerbit,
                    int edisi, String bulanTerbit, boolean edisiTerbaru,
                    String nomorRak) {
@@ -27,16 +27,20 @@ public class Majalah extends Koleksi implements Terarsip {
         this.nomorRak = nomorRak;
     }
 
-    // [Atribusi AI]: Method layakDipinjam() dibantu AI untuk menerapkan aturan
-    // bahwa majalah layak dipinjam bila bukan edisi terbaru.
+    // [Atribusi AI]: Aturan kelayakan majalah dibantu AI.
     @Override
     public boolean layakDipinjam() {
         return !edisiTerbaru;
     }
 
     @Override
+    public String jenis() {
+        return "Majalah";
+    }
+
+    @Override
     public String deskripsi() {
-        return super.deskripsi() + " | edisi " + edisi + ", " + bulanTerbit;
+        return super.deskripsi() + ", edisi " + edisi + " bulan " + bulanTerbit;
     }
 
     @Override
@@ -45,9 +49,19 @@ public class Majalah extends Koleksi implements Terarsip {
     }
 
     // [Atribusi AI]: Aturan lantai dibantu AI: huruf pertama nomor rak
-    // menentukan lantai (A = lantai 1, B = lantai 2, C = lantai 3).
+    // menentukan lantai (A = 1, B = 2, C = 3).
     @Override
     public int lokasiLantai() {
-        return nomorRak.charAt(0) - 'A' + 1;
+        char huruf = Character.toUpperCase(nomorRak.charAt(0));
+        if (huruf == 'A') {
+            return 1;
+        }
+        if (huruf == 'B') {
+            return 2;
+        }
+        if (huruf == 'C') {
+            return 3;
+        }
+        return 0;
     }
 }

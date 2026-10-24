@@ -14,13 +14,17 @@ import model.Koleksi;
 
 public class UrutLayakLaluJudul implements Comparator<Koleksi> {
 
-    // [Atribusi AI]: Method compare() dibantu AI untuk mengurutkan koleksi layak
-    // pinjam lebih dulu, lalu berdasarkan judul (urutan alfabet).
+    // [Atribusi AI]: Logika pengurutan berlapis (layak dulu, lalu judul) dibantu AI.
     @Override
     public int compare(Koleksi a, Koleksi b) {
-        int hasil = Boolean.compare(b.layakDipinjam(), a.layakDipinjam());
-        if (hasil != 0) {
-            return hasil;
+        boolean layakA = a.layakDipinjam();
+        boolean layakB = b.layakDipinjam();
+
+        if (layakA && !layakB) {
+            return -1;
+        }
+        if (!layakA && layakB) {
+            return 1;
         }
         return a.getJudul().compareToIgnoreCase(b.getJudul());
     }

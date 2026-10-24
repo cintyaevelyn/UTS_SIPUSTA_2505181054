@@ -10,8 +10,11 @@ package eksepsi;
  */
 public class KoleksiTidakLayakException extends PustakaException {
 
+    private static final long serialVersionUID = 1L;
+
     public KoleksiTidakLayakException(String judul) {
-        super("Koleksi \"" + judul + "\" belum bisa dipinjam saat ini. "
-                + "Silakan pilih koleksi lain.");
+        super("Maaf, \"" + judul + "\" belum dapat dipinjam saat ini "
+                + "(misalnya karena sedang diperbaiki atau merupakan edisi terbaru). "
+                + "Silakan pilih koleksi lain atau hubungi petugas perpustakaan.");
     }
 }

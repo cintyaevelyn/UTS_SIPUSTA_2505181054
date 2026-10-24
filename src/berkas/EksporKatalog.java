@@ -20,28 +20,29 @@ import model.Koleksi;
 
 public class EksporKatalog {
 
-    // [Atribusi AI]: Method tulisKatalog() dibantu AI untuk menyusun kolom
-    // sejajar dengan printf dan menutup aliran lewat try-with-resources.
-    public void tulisKatalog(String namaBerkas, List<Koleksi> daftar)
-            throws IOException {
+    // [Atribusi AI]: tulisKatalog() dibantu AI: kolom sejajar dengan printf dan
+    // aliran ditutup otomatis lewat try-with-resources.
+    public void tulisKatalog(String namaBerkas, List<Koleksi> daftar) throws IOException {
         try (PrintWriter tulis = new PrintWriter(
                 new BufferedWriter(new FileWriter(namaBerkas, StandardCharsets.UTF_8)))) {
 
-            tulis.println("KATALOG PERPUSTAKAAN POLITEKNIK NEGERI MEDAN");
-            tulis.println("Tanggal cetak: " + LocalDate.now());
+            tulis.println("KATALOG KOLEKSI PERPUSTAKAAN POLITEKNIK NEGERI MEDAN");
+            tulis.println("Disusun oleh : Cintya Evelyn Butarbutar (2505181054)");
+            tulis.println("Tanggal      : " + LocalDate.now());
             tulis.println();
-            tulis.printf("%-10s %-28s %-14s %-6s %-20s%n",
-                    "KODE", "JUDUL", "JENIS", "TAHUN", "STATUS");
-            tulis.println("-".repeat(82));
+            tulis.printf("%-9s %-27s %-15s %-7s %-20s%n",
+                    "KODE", "JUDUL KOLEKSI", "JENIS", "TERBIT", "STATUS");
+            tulis.println("=".repeat(80));
 
             for (Koleksi k : daftar) {
-                tulis.printf("%-10s %-28s %-14s %-6d %-20s%n",
-                        k.getKodeKoleksi(), k.getJudul(),
-                        k.getClass().getSimpleName(), k.getTahunTerbit(),
-                        k.layakDipinjam() ? "Layak dipinjam" : "Tidak layak");
+                String status = k.layakDipinjam() ? "Dapat dipinjam" : "Tidak dapat dipinjam";
+                tulis.printf("%-9s %-27s %-15s %-7d %-20s%n",
+                        k.getKodeKoleksi(), k.getJudul(), k.jenis(),
+                        k.getTahunTerbit(), status);
             }
+
             tulis.println();
-            tulis.println("Jumlah koleksi: " + daftar.size());
+            tulis.println("Jumlah seluruh koleksi : " + daftar.size());
         }
     }
 }

@@ -22,7 +22,7 @@ import model.Koleksi;
 public class KatalogPerpustakaan {
 
     private final List<Koleksi> daftar = new ArrayList<>();
-    private final Set<String> sedangDipinjam = new HashSet<>();
+    private final Set<String> kodeDipinjam = new HashSet<>();
 
     public void tambah(Koleksi koleksi) {
         daftar.add(koleksi);
@@ -41,37 +41,36 @@ public class KatalogPerpustakaan {
         return null;
     }
 
-    // [Atribusi AI]: Method cetakStatus() dibantu AI agar seluruh koleksi
-    // diproses polimorfik lewat tipe induk, tanpa pemeriksaan tipe satu per satu.
+    // [Atribusi AI]: cetakStatus() dibantu AI agar semua koleksi diproses lewat
+    // tipe induk (polimorfik), tanpa memeriksa jenisnya satu per satu.
     public void cetakStatus() {
         for (Koleksi k : daftar) {
-            String status = k.layakDipinjam() ? "Layak dipinjam" : "Tidak layak dipinjam";
-            System.out.println(k.deskripsi() + " | " + status);
+            String keterangan = k.layakDipinjam() ? "TERSEDIA UNTUK DIPINJAM" : "TIDAK DAPAT DIPINJAM";
+            System.out.println(k.deskripsi() + " => " + keterangan);
         }
     }
 
-    // [Atribusi AI]: Method urut() dibantu AI agar aturan pengurutan dapat
-    // diganti dari luar lewat Comparator, tanpa mengubah urutan daftar asli.
-    public List<Koleksi> urut(Comparator<Koleksi> pembanding) {
-        List<Koleksi> salinan = new ArrayList<>(daftar);
-        salinan.sort(pembanding);
-        return salinan;
+    // [Atribusi AI]: urut() dibantu AI agar aturan urutan bisa diganti dari luar.
+    public List<Koleksi> urut(Comparator<Koleksi> aturan) {
+        List<Koleksi> hasil = new ArrayList<>(daftar);
+        hasil.sort(aturan);
+        return hasil;
     }
 
-    // [Atribusi AI]: Method pinjam() dibantu AI untuk memeriksa kondisi sebelum
-    // meminjam dan melempar eksepsi yang sesuai dengan keadaannya.
-    public void pinjam(String kodeKoleksi) throws PustakaException {
-        Koleksi k = cari(kodeKoleksi);
+    // [Atribusi AI]: pinjam() dibantu AI untuk memeriksa keadaan lalu melempar
+    // eksepsi yang sesuai.
+    public void pinjam(String kode) throws PustakaException {
+        Koleksi k = cari(kode);
         if (k == null) {
-            throw new PustakaException("Koleksi dengan kode " + kodeKoleksi
-                    + " tidak ditemukan di katalog.");
+            throw new PustakaException("Maaf, kami tidak menemukan koleksi berkode "
+                    + kode + ". Mohon periksa kembali kodenya.");
         }
         if (!k.layakDipinjam()) {
             throw new KoleksiTidakLayakException(k.getJudul());
         }
-        if (sedangDipinjam.contains(kodeKoleksi)) {
+        if (kodeDipinjam.contains(kode)) {
             throw new KoleksiSedangDipinjamException(k.getJudul());
         }
-        sedangDipinjam.add(kodeKoleksi);
+        kodeDipinjam.add(kode);
     }
 }

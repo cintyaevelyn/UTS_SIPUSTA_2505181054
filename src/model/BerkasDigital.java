@@ -10,8 +10,8 @@ package model;
  */
 public class BerkasDigital extends Koleksi {
 
-    private int ukuranMB;
-    private String tautanUnduh;
+    private final int ukuranMB;
+    private final String tautanUnduh;
 
     public BerkasDigital(String kodeKoleksi, String judul, int tahunTerbit,
                          int ukuranMB, String tautanUnduh) {
@@ -20,17 +20,19 @@ public class BerkasDigital extends Koleksi {
         this.tautanUnduh = tautanUnduh;
     }
 
-    // [Atribusi AI]: Method layakDipinjam() dibantu AI untuk menerapkan aturan
-    // bahwa berkas digital selalu layak dipinjam.
+    // [Atribusi AI]: Aturan kelayakan berkas digital dibantu AI (selalu layak).
     @Override
     public boolean layakDipinjam() {
         return true;
     }
 
-    // [Atribusi AI]: Method deskripsi() dibantu AI untuk memperluas deskripsi
-    // induk dengan super.deskripsi().
+    @Override
+    public String jenis() {
+        return "Berkas Digital";
+    }
+
     @Override
     public String deskripsi() {
-        return super.deskripsi() + " | " + ukuranMB + " MB, " + tautanUnduh;
+        return super.deskripsi() + ", " + ukuranMB + " MB, unduh di " + tautanUnduh;
     }
 }

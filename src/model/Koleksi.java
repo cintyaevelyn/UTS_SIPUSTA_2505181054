@@ -9,26 +9,28 @@ package model;
  * @author dewi daughter
  */
 
-// [Atribusi AI]: Class Koleksi (atribut, konstruktor, method abstract
-// layakDipinjam(), deskripsi(), dan getter) dibantu AI untuk merancang kelas
-// induk abstract bagi seluruh jenis koleksi.
+// [Atribusi AI]: Rancangan class induk abstract Koleksi (method abstract
+// layakDipinjam() dan jenis(), serta deskripsi()) dibuat dengan bantuan AI.
 public abstract class Koleksi {
 
-    protected String kodeKoleksi;
-    protected String judul;
-    protected int tahunTerbit;
+    private final String kodeKoleksi;
+    private final String judul;
+    private final int tahunTerbit;
 
-    public Koleksi(String kodeKoleksi, String judul, int tahunTerbit) {
+    protected Koleksi(String kodeKoleksi, String judul, int tahunTerbit) {
         this.kodeKoleksi = kodeKoleksi;
         this.judul = judul;
         this.tahunTerbit = tahunTerbit;
     }
 
-    // Method abstract: setiap turunan wajib mengisinya sesuai aturannya sendiri
+    // Aturan kelayakan berbeda tiap jenis, jadi dibiarkan abstract
     public abstract boolean layakDipinjam();
 
+    // Nama jenis koleksi yang mudah dibaca, diisi oleh tiap turunan
+    public abstract String jenis();
+
     public String deskripsi() {
-        return kodeKoleksi + " - " + judul + " (" + tahunTerbit + ")";
+        return "[" + kodeKoleksi + "] " + judul + ", terbit " + tahunTerbit;
     }
 
     public String getKodeKoleksi() {

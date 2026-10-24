@@ -10,8 +10,10 @@ package eksepsi;
  */
 public class KoleksiSedangDipinjamException extends PustakaException {
 
+    private static final long serialVersionUID = 1L;
+
     public KoleksiSedangDipinjamException(String judul) {
-        super("Koleksi \"" + judul + "\" sedang dipinjam orang lain. "
-                + "Silakan coba lagi setelah dikembalikan.");
+        super("Maaf, \"" + judul + "\" sedang dipinjam oleh anggota lain. "
+                + "Silakan coba lagi nanti setelah koleksi ini dikembalikan.");
     }
 }
